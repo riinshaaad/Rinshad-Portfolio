@@ -1455,31 +1455,28 @@ img {
     font-size: 1.9rem;
   }
 
-  .hero .section__inner {
-    padding-top: 10vh;
+  .profile {
     flex-direction: column;
     text-align: center;
-    gap: 40px;
+    gap: 32px;
+    padding: 80px 20px 40px;
     justify-content: flex-start;
   }
 
-  .hero__content {
-    margin-top: 0;
+  .profile__group {
+    width: 300px;
+    height: 300px;
+    margin-top: 40px;
   }
 
-  .hero__photo-wrapper {
-    position: relative;
-    width: 100%;
-    right: 0;
-    height: 50vh;
+  .profile__content {
+    align-items: center;
   }
 
-  .hero__photo-img {
-    max-height: 50vh;
-  }
-
-  .hero__photo-circle {
-    width: 50%;
+  .profile__contact {
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
   }
 
   .about__stats {
@@ -1542,26 +1539,38 @@ img {
     font-size: 1.6rem;
   }
 
-  .hero__name {
+  .profile {
+    padding: 60px 16px 40px;
+  }
+
+  .profile__group {
+    width: 250px;
+    height: 250px;
+    margin-top: 20px;
+  }
+
+  .profile__name {
     font-size: 2.2rem;
     letter-spacing: -1px;
   }
 
-  .hero__title {
+  .profile__title {
     font-size: 0.9rem;
     letter-spacing: 4px;
   }
 
-  .hero__photo-wrapper {
-    height: 45vh;
+  .profile__bio {
+    font-size: 0.95rem;
   }
 
-  .hero__photo-img {
-    max-height: 45vh;
+  .profile__cta {
+    flex-direction: column;
+    width: 100%;
   }
-
-  .hero__photo-circle {
-    width: 60%;
+  
+  .profile__cta .btn {
+    width: 100%;
+    justify-content: center;
   }
 
   .about__stats {
