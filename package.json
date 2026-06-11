@@ -1,0 +1,8 @@
+{
+  "name": "mohammed-rinshad-portfolio",
+  "version": "1.0.0",
+  "description": "Data Analyst Portfolio — Mohammed Rinshad P",
+  "scripts": {
+    "dev": "npx -y live-server ./ --port=3000 --open=/"
+  }
+}
