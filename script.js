@@ -137,6 +137,7 @@
     // About section — counter animation
     if (section.id === 'about') {
       setTimeout(() => animateCounters(), 400);
+      setTimeout(() => animateAboutText(), 600);
     }
 
     // Skills section — progress bars
@@ -169,6 +170,33 @@
 
       requestAnimationFrame(updateCounter);
     });
+  }
+
+  // ---------------------------------------------------------------
+  // About Text Typing Animation
+  // ---------------------------------------------------------------
+  let aboutOriginalText = '';
+  const aboutTextEl = document.querySelector('.about__text');
+
+  function prepareAboutText() {
+    if (!aboutTextEl) return;
+    aboutOriginalText = aboutTextEl.textContent.replace(/\s+/g, ' ').trim();
+    aboutTextEl.textContent = '';
+  }
+
+  function animateAboutText() {
+    if (!aboutTextEl || !aboutOriginalText) return;
+    let i = 0;
+    const speed = 10; 
+    
+    function typeChar() {
+      if (i < aboutOriginalText.length) {
+        aboutTextEl.textContent += aboutOriginalText.charAt(i);
+        i++;
+        setTimeout(typeChar, speed);
+      }
+    }
+    typeChar();
   }
 
   // ---------------------------------------------------------------
@@ -527,6 +555,7 @@
     initCTAButtons();
     initContactForm();
     initScatterEffect();
+    prepareAboutText();
   }
 
   // Wait for DOM

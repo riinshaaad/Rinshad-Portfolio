@@ -143,14 +143,17 @@ img {
    --------------------------------------------------------------- */
 .fade-item {
   opacity: 0;
-  transform: translateY(30px);
+  filter: blur(10px);
+  transform: translateX(-30px);
   transition: opacity var(--fade-duration) ease,
-              transform var(--fade-duration) ease;
+              transform var(--fade-duration) ease,
+              filter var(--fade-duration) ease;
 }
 
 .section--active .fade-item {
   opacity: 1;
-  transform: translateY(0);
+  filter: blur(0);
+  transform: translateX(0);
 }
 
 .section--active .fade-item:nth-child(1) { transition-delay: 0.08s; }
@@ -643,12 +646,94 @@ img {
   min-height: 100vh;
 }
 
+.about .fade-item {
+  transform: scale(0.85) translateY(40px);
+}
+
+.section--active.about .fade-item {
+  transform: scale(1) translateY(0);
+  transition: opacity var(--fade-duration) ease, transform var(--fade-duration) cubic-bezier(0.34, 1.56, 0.64, 1), filter var(--fade-duration) ease;
+}
+
+.about .section__heading.fade-item {
+  transform: translateX(-40px);
+}
+
+.section--active.about .section__heading.fade-item {
+  transform: translateX(0);
+  transition: opacity var(--fade-duration) ease, transform var(--fade-duration) ease, filter var(--fade-duration) ease;
+}
+
+@keyframes slideDivider {
+  0%, 100% {
+    margin-left: 0;
+  }
+  50% {
+    margin-left: 160px;
+  }
+}
+
+.about .section__divider {
+  margin-bottom: 0;
+  animation: slideDivider 5s ease-in-out infinite;
+}
+
+.about__layout {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.about__left {
+  flex: 0 0 55%;
+  margin-left: -40px;
+}
+
+.about__right {
+  flex: 0 0 40%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.about__image {
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+  animation: floatAvatar 4s ease-in-out infinite;
+  margin-right: -100px;
+  margin-top: -80px;
+}
+
+@keyframes floatAvatar {
+  0%, 100% {
+    transform: translateY(0) scale(1.35);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.35);
+  }
+}
+
+@media (max-width: 900px) {
+  .about__layout {
+    flex-direction: column-reverse;
+    gap: 32px;
+  }
+  .about__right {
+    width: 60%;
+    margin-bottom: 24px;
+  }
+}
+
 .about__text {
   font-size: 1.05rem;
   line-height: 1.85;
   color: var(--white-70);
   max-width: 780px;
+  margin-top: 24px;
   margin-bottom: 48px;
+  min-height: 200px;
 }
 
 .about__stats {
