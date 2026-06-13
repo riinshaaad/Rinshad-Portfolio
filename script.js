@@ -14,7 +14,7 @@
   const progressFill = document.getElementById('progressTopFill');
   const typingEl = document.getElementById('typingText');
   const counters = document.querySelectorAll('.counter');
-  const progressBars = document.querySelectorAll('.progress-bar__fill');
+
   const ctaButtons = document.querySelectorAll('[data-nav]');
 
   // ---------------------------------------------------------------
@@ -139,11 +139,6 @@
       setTimeout(() => animateCounters(), 400);
       setTimeout(() => animateAboutText(), 600);
     }
-
-    // Skills section — progress bars
-    if (section.id === 'skills') {
-      setTimeout(() => animateProgressBars(), 400);
-    }
   }
 
   // ---------------------------------------------------------------
@@ -204,18 +199,6 @@
   }
 
 
-
-  // ---------------------------------------------------------------
-  // Progress Bar Animation
-  // ---------------------------------------------------------------
-  function animateProgressBars() {
-    progressBars.forEach((bar, i) => {
-      const targetWidth = bar.getAttribute('data-width');
-      setTimeout(() => {
-        bar.style.width = targetWidth + '%';
-      }, i * 120); // Stagger each bar
-    });
-  }
 
   // ---------------------------------------------------------------
   // Typing Effect
@@ -772,6 +755,80 @@ Keep ALL responses extremely short, concise, and direct (maximum 2-3 sentences o
     initScatterEffect();
     prepareAboutText();
     initChatbot();
+    initSkillMarquee();
+  }
+
+  // ---------------------------------------------------------------
+  // Skill Marquee — duplicate items for seamless loop
+  // ---------------------------------------------------------------
+  function initSkillMarquee() {
+    const marquee = document.getElementById('skillMarquee');
+    if (!marquee) return;
+    const items = marquee.querySelectorAll('.skill-icon-card');
+    // Clone all items and append for infinite loop
+    items.forEach(item => {
+      const clone = item.cloneNode(true);
+      marquee.appendChild(clone);
+    });
+
+    // Fluid spotlight — track mouse on each card
+    marquee.addEventListener('mousemove', (e) => {
+      const card = e.target.closest('.skill-icon-card');
+      if (!card) return;
+      const rect = card.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      card.style.setProperty('--mouse-x', x + '%');
+      card.style.setProperty('--mouse-y', y + '%');
+    });
+
+    // Drag-to-scroll
+    const wrapper = marquee.closest('.skill-marquee-wrapper');
+    if (!wrapper) return;
+
+    let isDragging = false;
+    let startX = 0;
+    let scrollStart = 0;
+
+    wrapper.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.pageX;
+      scrollStart = wrapper.scrollLeft;
+      wrapper.classList.add('is-dragging');
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const dx = e.pageX - startX;
+      wrapper.scrollLeft = scrollStart - dx;
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (isDragging) {
+        isDragging = false;
+        wrapper.classList.remove('is-dragging');
+      }
+    });
+
+    // Touch support
+    wrapper.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      startX = e.touches[0].pageX;
+      scrollStart = wrapper.scrollLeft;
+      wrapper.classList.add('is-dragging');
+    }, { passive: true });
+
+    wrapper.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      const dx = e.touches[0].pageX - startX;
+      wrapper.scrollLeft = scrollStart - dx;
+    }, { passive: true });
+
+    wrapper.addEventListener('touchend', () => {
+      isDragging = false;
+      wrapper.classList.remove('is-dragging');
+    });
   }
 
   // Wait for DOM

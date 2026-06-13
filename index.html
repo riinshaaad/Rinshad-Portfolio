@@ -30,8 +30,7 @@
     <button class="nav-dot" data-index="2" data-label="Skills" aria-label="Go to Skills section"></button>
     <button class="nav-dot" data-index="3" data-label="Experience" aria-label="Go to Experience section"></button>
     <button class="nav-dot" data-index="4" data-label="Projects" aria-label="Go to Projects section"></button>
-    <button class="nav-dot" data-index="5" data-label="Education" aria-label="Go to Education section"></button>
-    <button class="nav-dot" data-index="6" data-label="Contact" aria-label="Go to Contact section"></button>
+    <button class="nav-dot" data-index="5" data-label="Contact" aria-label="Go to Contact section"></button>
   </nav>
 
     <!-- ============================================================
@@ -55,7 +54,7 @@
         <button class="btn btn--primary" data-nav="4">
           View Projects
         </button>
-        <button class="btn btn--outline" data-nav="6">
+        <button class="btn btn--outline" data-nav="5">
           Contact Me
         </button>
       </div>
@@ -157,82 +156,239 @@
   </section>
 
   <!-- ============================================================
-       SECTION 3: SKILLS
+       SECTION 3: SKILLS & EDUCATION (Merged)
        ============================================================ -->
-  <section class="section section--alt skills" id="skills" data-index="2">
-    <span class="section__label">My Skills</span>
-    <span class="section__number">02 / 06</span>
+  <section class="section section--alt skills-edu" id="skills" data-index="2">
+    <span class="section__label">Skills & Education</span>
+    <span class="section__number">02 / 05</span>
     <div class="section__inner">
-      <h2 class="section__heading fade-item">Technical <span>Skills</span></h2>
+      <h2 class="section__heading fade-item">Skills & <span>Education</span></h2>
       <div class="section__divider fade-item"></div>
 
-      <div class="skills__grid fade-item">
-        <!-- Technical Skills -->
-        <div>
-          <p class="skills__column-title">Technical Proficiency</p>
+      <div class="bento-grid fade-item">
 
-          <div class="progress-item">
-            <div class="progress-item__header">
-              <span class="progress-item__label">Power BI / Tableau</span>
-              <span class="progress-item__value">90%</span>
-            </div>
-            <div class="progress-bar">
-              <div class="progress-bar__fill" data-width="90"></div>
-            </div>
-          </div>
+        <!-- ROW 1: Technical Skills (spanning 3 columns) -->
+        <div class="bento-card bento-card--wide bento-card--glass">
+          <p class="bento-card__label">Technical Proficiency</p>
+          <div class="skill-marquee-wrapper">
+            <div class="skill-marquee" id="skillMarquee">
 
-          <div class="progress-item">
-            <div class="progress-item__header">
-              <span class="progress-item__label">MS Excel (Pivot, Power Query)</span>
-              <span class="progress-item__value">92%</span>
-            </div>
-            <div class="progress-bar">
-              <div class="progress-bar__fill" data-width="92"></div>
-            </div>
-          </div>
+              <div class="skill-icon-card" data-skill="Power BI">
+                <div class="skill-icon-card__icon">
+                  <svg viewBox="0 0 630 630" width="100%" height="100%" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <g transform="translate(77, 0)">
+                      <rect x="256" y="0" width="219" height="630" rx="26"></rect>
+                      <path d="M346,604 L346,630 L320,630 L153,630 C138.6,630 127,618.4 127,604 L127,183 C127,168.6 138.6,157 153,157 L320,157 C334.4,157 346,168.6 346,183 L346,604 Z"></path>
+                      <path d="M219,604 L219,630 L193,630 L26,630 C11.6,630 0,618.4 0,604 L0,341 C0,326.6 11.6,315 26,315 L193,315 C207.4,315 219,326.6 219,341 L219,604 Z"></path>
+                    </g>
+                  </svg>
+                </div>
+                <span class="skill-icon-card__name">Power BI</span>
+                <span class="skill-icon-card__level">Advanced</span>
+              </div>
 
-          <div class="progress-item">
-            <div class="progress-item__header">
-              <span class="progress-item__label">SQL (Queries, Joins, Aggregations)</span>
-              <span class="progress-item__value">88%</span>
-            </div>
-            <div class="progress-bar">
-              <div class="progress-bar__fill" data-width="88"></div>
-            </div>
-          </div>
+              <div class="skill-icon-card" data-skill="Tableau">
+                <div class="skill-icon-card__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                </div>
+                <span class="skill-icon-card__name">Tableau</span>
+                <span class="skill-icon-card__level">Advanced</span>
+              </div>
 
-          <div class="progress-item">
-            <div class="progress-item__header">
-              <span class="progress-item__label">Python (Pandas, NumPy, Matplotlib)</span>
-              <span class="progress-item__value">85%</span>
-            </div>
-            <div class="progress-bar">
-              <div class="progress-bar__fill" data-width="85"></div>
-            </div>
-          </div>
+              <div class="skill-icon-card" data-skill="SQL">
+                <div class="skill-icon-card__icon">
+                  <img src="https://cdn.simpleicons.org/mysql/white" alt="SQL" class="skill-logo">
+                </div>
+                <span class="skill-icon-card__name">SQL</span>
+                <span class="skill-icon-card__level">Advanced</span>
+              </div>
 
-          <div class="progress-item">
-            <div class="progress-item__header">
-              <span class="progress-item__label">EDA (Data Cleaning & Preprocessing)</span>
-              <span class="progress-item__value">85%</span>
-            </div>
-            <div class="progress-bar">
-              <div class="progress-bar__fill" data-width="85"></div>
+              <div class="skill-icon-card" data-skill="Python">
+                <div class="skill-icon-card__icon">
+                  <img src="https://cdn.simpleicons.org/python/white" alt="Python" class="skill-logo">
+                </div>
+                <span class="skill-icon-card__name">Python</span>
+                <span class="skill-icon-card__level">Intermediate</span>
+              </div>
+
+              <div class="skill-icon-card" data-skill="MS Excel">
+                <div class="skill-icon-card__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+                </div>
+                <span class="skill-icon-card__name">MS Excel</span>
+                <span class="skill-icon-card__level">Advanced</span>
+              </div>
+
+              <div class="skill-icon-card" data-skill="EDA">
+                <div class="skill-icon-card__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/><line x1="11" y1="8" x2="11" y2="14"/></svg>
+                </div>
+                <span class="skill-icon-card__name">EDA</span>
+                <span class="skill-icon-card__level">Advanced</span>
+              </div>
+
+              <div class="skill-icon-card" data-skill="Pandas">
+                <div class="skill-icon-card__icon">
+                  <img src="https://cdn.simpleicons.org/pandas/white" alt="Pandas" class="skill-logo">
+                </div>
+                <span class="skill-icon-card__name">Pandas</span>
+                <span class="skill-icon-card__level">Intermediate</span>
+              </div>
+
+              <div class="skill-icon-card" data-skill="NumPy">
+                <div class="skill-icon-card__icon">
+                  <img src="https://cdn.simpleicons.org/numpy/white" alt="NumPy" class="skill-logo">
+                </div>
+                <span class="skill-icon-card__name">NumPy</span>
+                <span class="skill-icon-card__level">Intermediate</span>
+              </div>
+
+              <div class="skill-icon-card" data-skill="Matplotlib">
+                <div class="skill-icon-card__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </div>
+                <span class="skill-icon-card__name">Matplotlib</span>
+                <span class="skill-icon-card__level">Intermediate</span>
+              </div>
+
+              <div class="skill-icon-card" data-skill="DAX">
+                <div class="skill-icon-card__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+                </div>
+                <span class="skill-icon-card__name">DAX</span>
+                <span class="skill-icon-card__level">Advanced</span>
+              </div>
+
+              <div class="skill-icon-card" data-skill="Power Query">
+                <div class="skill-icon-card__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                </div>
+                <span class="skill-icon-card__name">Power Query</span>
+                <span class="skill-icon-card__level">Advanced</span>
+              </div>
+
+              <div class="skill-icon-card" data-skill="Google Sheets">
+                <div class="skill-icon-card__icon">
+                  <img src="https://cdn.simpleicons.org/googlesheets/white" alt="Google Sheets" class="skill-logo">
+                </div>
+                <span class="skill-icon-card__name">Google Sheets</span>
+                <span class="skill-icon-card__level">Advanced</span>
+              </div>
+
+              <!-- Microsoft Tools -->
+              <div class="skill-icon-card" data-skill="MS Word">
+                <div class="skill-icon-card__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                </div>
+                <span class="skill-icon-card__name">MS Word</span>
+                <span class="skill-icon-card__level">Advanced</span>
+              </div>
+
+              <div class="skill-icon-card" data-skill="MS PowerPoint">
+                <div class="skill-icon-card__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/><path d="M6 8h4a2 2 0 0 1 0 4H6V8z"/></svg>
+                </div>
+                <span class="skill-icon-card__name">PowerPoint</span>
+                <span class="skill-icon-card__level">Advanced</span>
+              </div>
+
+              <div class="skill-icon-card" data-skill="MS Access">
+                <div class="skill-icon-card__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                </div>
+                <span class="skill-icon-card__name">MS Access</span>
+                <span class="skill-icon-card__level">Intermediate</span>
+              </div>
+
+              <div class="skill-icon-card" data-skill="MS Outlook">
+                <div class="skill-icon-card__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+                <span class="skill-icon-card__name">MS Outlook</span>
+                <span class="skill-icon-card__level">Advanced</span>
+              </div>
+
+              <!-- Developer Tools -->
+              <div class="skill-icon-card" data-skill="GitHub">
+                <div class="skill-icon-card__icon">
+                  <img src="https://cdn.simpleicons.org/github/white" alt="GitHub" class="skill-logo">
+                </div>
+                <span class="skill-icon-card__name">GitHub</span>
+                <span class="skill-icon-card__level">Intermediate</span>
+              </div>
+
+              <!-- AI Tools -->
+              <div class="skill-icon-card" data-skill="ChatGPT">
+                <div class="skill-icon-card__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h.01"/><path d="M12 10h.01"/><path d="M16 10h.01"/></svg>
+                </div>
+                <span class="skill-icon-card__name">ChatGPT</span>
+                <span class="skill-icon-card__level">Advanced</span>
+              </div>
+
+              <div class="skill-icon-card" data-skill="Gemini AI">
+                <div class="skill-icon-card__icon">
+                  <img src="https://cdn.simpleicons.org/googlegemini/white" alt="Gemini AI" class="skill-logo">
+                </div>
+                <span class="skill-icon-card__name">Gemini AI</span>
+                <span class="skill-icon-card__level">Advanced</span>
+              </div>
+
+              <div class="skill-icon-card" data-skill="GitHub Copilot">
+                <div class="skill-icon-card__icon">
+                  <img src="https://cdn.simpleicons.org/githubcopilot/white" alt="Copilot" class="skill-logo">
+                </div>
+                <span class="skill-icon-card__name">Copilot</span>
+                <span class="skill-icon-card__level">Intermediate</span>
+              </div>
+
+              <div class="skill-icon-card" data-skill="AI Prompt Engineering">
+                <div class="skill-icon-card__icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                </div>
+                <span class="skill-icon-card__name">Prompt Eng.</span>
+                <span class="skill-icon-card__level">Advanced</span>
+              </div>
+
             </div>
           </div>
         </div>
 
-        <!-- Soft Skills -->
-        <div>
-          <p class="skills__column-title">Soft Skills</p>
-          <div class="soft-skills">
-            <span class="skill-tag">Analytical Thinking</span>
-            <span class="skill-tag">Problem Solving</span>
-            <span class="skill-tag">Adaptability</span>
-            <span class="skill-tag">Clear Communication</span>
-            <span class="skill-tag">Statistical Analysis</span>
-            <span class="skill-tag">Team Collaboration</span>
-            <span class="skill-tag">Attention to Detail</span>
+        <!-- ROW 2: Education -->
+        <div class="bento-card bento-card--wide bento-card--solid">
+          <p class="bento-card__label">Education</p>
+
+          <div class="edu-mini-card">
+            <div class="edu-mini-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5"/></svg>
+            </div>
+            <div class="edu-mini-card__info">
+              <h4>Bachelor of Commerce (Finance)</h4>
+              <p class="edu-mini-card__sub">University of Calicut, Kerala</p>
+              <span class="edu-mini-card__date">Jun 2022 — Mar 2025</span>
+            </div>
+          </div>
+
+          <div class="edu-mini-card">
+            <div class="edu-mini-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+            </div>
+            <div class="edu-mini-card__info">
+              <h4>Advanced Data Analytics</h4>
+              <p class="edu-mini-card__sub">Professional Certification</p>
+              <span class="edu-mini-card__date">2026</span>
+            </div>
+          </div>
+
+          <div class="edu-mini-card">
+            <div class="edu-mini-card__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <div class="edu-mini-card__info">
+              <h4>Languages Known</h4>
+              <p class="edu-mini-card__sub">English & Malayalam</p>
+              <span class="edu-mini-card__date">Fluent</span>
+            </div>
           </div>
         </div>
       </div>
@@ -244,7 +400,7 @@
        ============================================================ -->
   <section class="section experience" id="experience" data-index="3">
     <span class="section__label">Work Experience</span>
-    <span class="section__number">03 / 06</span>
+    <span class="section__number">03 / 05</span>
     <div class="section__inner">
       <h2 class="section__heading fade-item">Work <span>Experience</span></h2>
       <div class="section__divider fade-item"></div>
@@ -277,7 +433,7 @@
        ============================================================ -->
   <section class="section section--alt projects" id="projects" data-index="4">
     <span class="section__label">My Projects</span>
-    <span class="section__number">04 / 06</span>
+    <span class="section__number">04 / 05</span>
     <div class="section__inner">
       <h2 class="section__heading fade-item">Featured <span>Projects</span></h2>
       <div class="section__divider fade-item"></div>
@@ -340,57 +496,11 @@
   </section>
 
   <!-- ============================================================
-       SECTION 6: EDUCATION
+       SECTION 5: CONTACT
        ============================================================ -->
-  <section class="section education" id="education" data-index="5">
-    <span class="section__label">Education</span>
-    <span class="section__number">05 / 06</span>
-    <div class="section__inner">
-      <h2 class="section__heading fade-item">Education & <span>Certifications</span></h2>
-      <div class="section__divider fade-item"></div>
-
-      <div class="education__grid fade-item">
-        <!-- Degree -->
-        <div class="edu-card">
-          <div class="edu-card__icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 1.1 2.7 3 6 3s6-1.9 6-3v-5"/></svg>
-          </div>
-          <h3 class="edu-card__title">Bachelor of Commerce (Finance)</h3>
-          <p class="edu-card__subtitle">University of Calicut, Kerala</p>
-          <p class="edu-card__date">Jun 2022 — Mar 2025</p>
-        </div>
-
-        <!-- Certification -->
-        <div class="edu-card">
-          <div class="edu-card__icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
-          </div>
-          <h3 class="edu-card__title">Advanced Data Analytics</h3>
-          <p class="edu-card__subtitle">Professional Certification</p>
-          <p class="edu-card__date">2026</p>
-        </div>
-      </div>
-
-      <!-- Languages -->
-      <div class="education__grid fade-item" style="margin-top: 28px;">
-        <div class="edu-card">
-          <div class="edu-card__icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          </div>
-          <h3 class="edu-card__title">Languages Known</h3>
-          <p class="edu-card__subtitle">English & Malayalam</p>
-          <p class="edu-card__date">Fluent</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       SECTION 7: CONTACT
-       ============================================================ -->
-  <section class="section section--blue contact" id="contact" data-index="6">
+  <section class="section section--blue contact" id="contact" data-index="5">
     <span class="section__label">Get In Touch</span>
-    <span class="section__number">06 / 06</span>
+    <span class="section__number">05 / 05</span>
     <div class="section__inner">
       <h2 class="section__heading fade-item">Let's <span style="color:rgba(255,255,255,0.6)">Connect</span></h2>
       <div class="section__divider fade-item"></div>
