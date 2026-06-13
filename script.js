@@ -187,17 +187,23 @@
   function animateAboutText() {
     if (!aboutTextEl || !aboutOriginalText) return;
     let i = 0;
-    const speed = 10; 
+    const speed = 4; 
+    aboutTextEl.classList.add('typing');
     
     function typeChar() {
       if (i < aboutOriginalText.length) {
         aboutTextEl.textContent += aboutOriginalText.charAt(i);
         i++;
         setTimeout(typeChar, speed);
+      } else {
+        aboutTextEl.classList.remove('typing');
+        aboutTextEl.classList.add('typing-finished');
       }
     }
     typeChar();
   }
+
+
 
   // ---------------------------------------------------------------
   // Progress Bar Animation
@@ -444,10 +450,18 @@
       // Wrap each character in the word
       word.split('').forEach(char => {
         const charSpan = document.createElement('span');
-        charSpan.textContent = char;
         charSpan.className = 'scatter-char';
         charSpan.style.display = 'inline-block';
         charSpan.style.transition = 'transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        
+        if (char === 'i') {
+          // Special "i" with jiggling dot
+          charSpan.classList.add('jiggle-i');
+          charSpan.innerHTML = '<span class="i-dot"></span><span class="i-body">ı</span>';
+        } else {
+          charSpan.textContent = char;
+        }
+        
         wordSpan.appendChild(charSpan);
       });
       
@@ -519,6 +533,207 @@
   }
 
   // ---------------------------------------------------------------
+  // Chatbot Logic
+  // ---------------------------------------------------------------
+  function initChatbot() {
+    const chatbotToggle = document.getElementById('chatbotToggle');
+    const chatbotWindow = document.getElementById('chatbotWindow');
+    const chatbotClose = document.getElementById('chatbotClose');
+    const chatbotInput = document.getElementById('chatbotInput');
+    const chatbotSend = document.getElementById('chatbotSend');
+    const chatbotMessages = document.getElementById('chatbotMessages');
+    
+    if (!chatbotToggle || !chatbotWindow) return;
+
+    let isChatOpen = false;
+
+    chatbotToggle.addEventListener('click', () => {
+      isChatOpen = !isChatOpen;
+      if (isChatOpen) {
+        chatbotWindow.classList.add('active');
+        chatbotInput.focus();
+        if (chatbotMessages.children.length === 1) {
+            // Add quick replies on first open
+            addQuickReplies();
+        }
+      } else {
+        chatbotWindow.classList.remove('active');
+      }
+    });
+
+    chatbotClose.addEventListener('click', () => {
+      isChatOpen = false;
+      chatbotWindow.classList.remove('active');
+    });
+
+    // ---------------------------------------------------------------
+    // AI Chatbot Logic (Powered by Google Gemini)
+    // ---------------------------------------------------------------
+    // IMPORTANT: Replace the string below with your free Google Gemini API key.
+    // Get one at: https://aistudio.google.com/app/apikey
+    const GEMINI_API_KEY = 'AIzaSyCtGaTuCFloJn8egtA6-xRK6wWEdKGaCJs'; 
+
+    let chatHistory = [];
+
+    const systemInstruction = `You are Rinshad's AI assistant for his portfolio website.
+You are helpful, professional, and knowledgeable about Data Analytics, Business Analysis, and MIS (Management Information Systems).
+
+About Rinshad: He is a versatile analyst who can work as a Data Analyst, Business Analyst, or MIS Analyst. He is passionate about turning complex data into clear, strategic decisions. He specializes in building robust datasets, predictive models, interactive dashboards, business process optimization, and management reporting systems.
+
+Roles he can fulfill:
+- **Data Analyst**: Building datasets, predictive models, statistical analysis, data visualization, and interactive dashboards.
+- **Business Analyst**: Requirements gathering, process mapping, stakeholder communication, gap analysis, business process improvement, and translating business needs into data-driven solutions.
+- **MIS Analyst**: Designing and maintaining management information systems, automated reporting pipelines, KPI tracking frameworks, operational dashboards, and ensuring data integrity across systems.
+
+Education: He holds a Bachelor of Commerce (B.Com) in Finance from the University of Calicut. Mention this ONLY if asked about education, studies, or finance.
+Tools he knows: Power BI, Tableau, SQL, Python (Pandas, NumPy, Matplotlib), MS Excel (Pivot, Power Query), and ERP/MIS reporting tools.
+Work experience: Built ML models, HR intelligence platforms, customer retention dashboards, survey analysis, automated MIS reports, and business process workflows.
+Contact: riinshaaadp@gmail.com or +91 8590438183, located in Kerala, India.
+
+CRITICAL INSTRUCTION FOR "WHY HIRE" QUESTIONS:
+If a user asks why they should hire a data analyst, business analyst, or MIS analyst, or how any of these roles can grow a business:
+1. You MUST start the response exactly with: "Hiring an Analyst like Rinshad..."
+2. Give a brief, perfect explanation of how the relevant analyst role directly drives business growth.
+3. Do NOT mention or refer to his "resume" or "cv".
+4. Do NOT mention his specific projects first. Explain the general benefits first.
+5. Close by listing his contact details (riinshaaadp@gmail.com, +91 8590438183).
+6. Keep the entire response extremely short and concise (under 3 sentences total).
+
+If a user asks what roles Rinshad can do, mention all three: Data Analyst, Business Analyst, and MIS Analyst, with a one-line summary of each.
+
+Keep ALL responses extremely short, concise, and direct (maximum 2-3 sentences or a few short bullet points). Visitors do not want to read long paragraphs or too much text. Do not use markdown headers, just plain text or simple bullet points.`;
+
+    function addMessage(text, sender) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `chat-message ${sender}`;
+      
+      // Basic formatting for bot responses (newlines to br, bold text)
+      let formattedText = text;
+      if (sender === 'bot') {
+        formattedText = formattedText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        formattedText = formattedText.replace(/\n/g, '<br>');
+      }
+      
+      msgDiv.innerHTML = `<div class="message-content">${formattedText}</div>`;
+      chatbotMessages.appendChild(msgDiv);
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      
+      // Remove quick replies if user sends a message
+      if (sender === 'user') {
+          const quickReplies = chatbotMessages.querySelector('.quick-replies');
+          if (quickReplies) quickReplies.remove();
+      }
+    }
+
+    function addQuickReplies() {
+      const replies = ['About Rinshad', 'Tools & Skills', 'Roles I Can Do', 'Contact Info'];
+      const container = document.createElement('div');
+      container.className = 'quick-replies chat-message bot';
+      
+      replies.forEach(text => {
+        const btn = document.createElement('button');
+        btn.className = 'quick-reply-btn';
+        btn.textContent = text;
+        btn.onclick = () => {
+          chatbotInput.value = text;
+          handleSend();
+        };
+        container.appendChild(btn);
+      });
+      
+      chatbotMessages.appendChild(container);
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    }
+
+    function showTyping() {
+      const typingDiv = document.createElement('div');
+      typingDiv.className = 'chat-message bot typing-indicator-container';
+      typingDiv.innerHTML = `
+        <div class="typing-indicator">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>
+      `;
+      chatbotMessages.appendChild(typingDiv);
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      return typingDiv;
+    }
+
+    async function getGeminiResponse(userText) {
+      if (GEMINI_API_KEY === 'YOUR_API_KEY_HERE') {
+        return "I'm currently running in offline mode. To enable my AI brain, please add your Gemini API key to the script.js file!";
+      }
+
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`;
+
+      // Format history for Gemini API
+      const contents = chatHistory.map(msg => ({
+        role: msg.sender === 'user' ? 'user' : 'model',
+        parts: [{ text: msg.text }]
+      }));
+
+      // Add the new user message
+      contents.push({
+        role: 'user',
+        parts: [{ text: userText }]
+      });
+
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            systemInstruction: {
+              parts: [{ text: systemInstruction }]
+            },
+            contents: contents
+          })
+        });
+
+        if (!response.ok) {
+           console.error("API Error:", await response.text());
+           return "I'm having trouble connecting to my AI brain right now. Please try again later.";
+        }
+
+        const data = await response.json();
+        const botReply = data.candidates[0].content.parts[0].text;
+        
+        // Update history
+        chatHistory.push({ sender: 'user', text: userText });
+        chatHistory.push({ sender: 'model', text: botReply });
+        
+        return botReply;
+
+      } catch (error) {
+        console.error("Fetch Error:", error);
+        return "Oops, something went wrong while thinking. Please check the console or try again.";
+      }
+    }
+
+    async function handleSend() {
+      const text = chatbotInput.value.trim();
+      if (!text) return;
+      
+      addMessage(text, 'user');
+      chatbotInput.value = '';
+      
+      const typingIndicator = showTyping();
+      
+      const botResponse = await getGeminiResponse(text);
+      
+      typingIndicator.remove();
+      addMessage(botResponse, 'bot');
+      setTimeout(addQuickReplies, 500);
+    }
+
+    chatbotSend.addEventListener('click', handleSend);
+    chatbotInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') handleSend();
+    });
+  }
+
+  // ---------------------------------------------------------------
   // Initialize
   // ---------------------------------------------------------------
   function init() {
@@ -556,6 +771,7 @@
     initContactForm();
     initScatterEffect();
     prepareAboutText();
+    initChatbot();
   }
 
   // Wait for DOM

@@ -113,6 +113,40 @@
               <p class="stat-card__label">Survey Responses Collected</p>
             </div>
           </div>
+
+          <!-- Chatbot Widget -->
+          <div class="chatbot-container fade-item">
+            <button class="chatbot-toggle" id="chatbotToggle" aria-label="Open Chatbot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+              <span>Chat with my AI assistant</span>
+            </button>
+            <div class="chatbot-window" id="chatbotWindow">
+              <div class="chatbot-header">
+                <div class="chatbot-header__info">
+                  <div class="chatbot-avatar">
+                    <img src="profile_subject.png" alt="Bot">
+                  </div>
+                  <div>
+                    <h4 class="chatbot-title">Rinshad's AI</h4>
+                    <p class="chatbot-status">Online</p>
+                  </div>
+                </div>
+                <button class="chatbot-close" id="chatbotClose" aria-label="Close Chatbot">&times;</button>
+              </div>
+              <div class="chatbot-messages" id="chatbotMessages">
+                <div class="chat-message bot">
+                  <div class="message-content">Hi there! I'm Rinshad's AI assistant. You can ask me about his background, tools he uses, his skills, or anything about Data Analytics!</div>
+                </div>
+              </div>
+              <div class="chatbot-input-area">
+                <input type="text" id="chatbotInput" placeholder="Type your question..." autocomplete="off">
+                <button id="chatbotSend" aria-label="Send Message">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
         </div>
         
         <div class="about__right fade-item">
