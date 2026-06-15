@@ -554,7 +554,7 @@
     // ---------------------------------------------------------------
     // IMPORTANT: Replace the string below with your free Google Gemini API key.
     // Get one at: https://aistudio.google.com/app/apikey
-    const GEMINI_API_KEY = 'AIzaSyCtGaTuCFloJn8egtA6-xRK6wWEdKGaCJs'; 
+    const GEMINI_API_KEY = 'YOUR_API_KEY_HERE'; 
 
     let chatHistory = [];
 
