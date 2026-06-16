@@ -28,9 +28,8 @@
     <button class="nav-dot nav-dot--active" data-index="0" data-label="Profile" aria-label="Go to Profile section"></button>
     <button class="nav-dot" data-index="1" data-label="About" aria-label="Go to About section"></button>
     <button class="nav-dot" data-index="2" data-label="Skills" aria-label="Go to Skills section"></button>
-    <button class="nav-dot" data-index="3" data-label="Experience" aria-label="Go to Experience section"></button>
-    <button class="nav-dot" data-index="4" data-label="Projects" aria-label="Go to Projects section"></button>
-    <button class="nav-dot" data-index="5" data-label="Contact" aria-label="Go to Contact section"></button>
+    <button class="nav-dot" data-index="3" data-label="Projects" aria-label="Go to Projects section"></button>
+    <button class="nav-dot" data-index="4" data-label="Contact" aria-label="Go to Contact section"></button>
   </nav>
 
     <!-- ============================================================
@@ -51,10 +50,10 @@
       </p>
 
       <div class="profile__cta">
-        <button class="btn btn--primary" data-nav="4">
+        <button class="btn btn--primary" data-nav="3">
           View Projects
         </button>
-        <button class="btn btn--outline" data-nav="5">
+        <button class="btn btn--outline" data-nav="4">
           Contact Me
         </button>
       </div>
@@ -81,7 +80,7 @@
        ============================================================ -->
   <section class="section about" id="about" data-index="1">
     <span class="section__label">About Me</span>
-    <span class="section__number">01 / 06</span>
+    <span class="section__number">01 / 04</span>
     <div class="section__inner">
       <div class="about__layout">
         <div class="about__left">
@@ -160,7 +159,7 @@
        ============================================================ -->
   <section class="section section--alt skills-edu" id="skills" data-index="2">
     <span class="section__label">Skills & Education</span>
-    <span class="section__number">02 / 05</span>
+    <span class="section__number">02 / 04</span>
     <div class="section__inner">
       <h2 class="section__heading fade-item">Skills & <span>Education</span></h2>
       <div class="section__divider fade-item"></div>
@@ -352,6 +351,35 @@
 
             </div>
           </div>
+          
+          <!-- Experience Popup 2 Overlay -->
+          <div class="experience-popup" id="experience2Popup">
+            <h3 class="experience-popup__title">Projects</h3>
+            <div class="experience-popup__content">
+              <div class="projects-popup-grid">
+                
+                <!-- Project 1: HRX -->
+                <div class="projects-popup-card">
+                  <img src="./project3_logo.jpg" alt="HRX Logo" class="projects-popup-img">
+                  <h3 class="projects-popup-role">HRX Workforce Intelligence</h3>
+                </div>
+
+                <!-- Project 2: Political Survey -->
+                <div class="projects-popup-card">
+                  <img src="./project_photo_new.jpg" alt="Political Survey" class="projects-popup-img">
+                  <h3 class="projects-popup-role">Gen Z Political Survey Analysis</h3>
+                </div>
+
+                <!-- Project 3: Churn Analysis -->
+                <div class="projects-popup-card">
+                  <img src="./project_photo_new_2.png" alt="Churn Analysis Dashboard" class="projects-popup-img">
+                  <h3 class="projects-popup-role">Churn Analytics</h3>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <!-- ROW 2: Education -->
@@ -380,106 +408,87 @@
             </div>
           </div>
 
-          <div class="edu-mini-card">
-            <div class="edu-mini-card__icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            </div>
-            <div class="edu-mini-card__info">
-              <h4>Languages Known</h4>
-              <p class="edu-mini-card__sub">English & Malayalam</p>
-              <span class="edu-mini-card__date">Fluent</span>
+          <!-- Experience Popup Overlay -->
+          <div class="experience-popup" id="experiencePopup">
+            <h3 class="experience-popup__title">Experience</h3>
+            <div class="experience-popup__content">
+              <div class="timeline">
+                <div class="timeline__item">
+                  <div class="timeline__dot"></div>
+                  <div class="timeline__card">
+                    <h3 class="timeline__role">Data Analyst Intern</h3>
+                    <p class="timeline__company">HACA — Calicut, India</p>
+                    <p class="timeline__date">January 2026 – July 2026</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    
   </section>
 
   <!-- ============================================================
-       SECTION 4: EXPERIENCE
+       SECTION 4: PROJECTS
        ============================================================ -->
-  <section class="section experience" id="experience" data-index="3">
-    <span class="section__label">Work Experience</span>
-    <span class="section__number">03 / 05</span>
-    <div class="section__inner">
-      <h2 class="section__heading fade-item">Work <span>Experience</span></h2>
-      <div class="section__divider fade-item"></div>
-
-      <div class="timeline fade-item">
-        <div class="timeline__item">
-          <div class="timeline__dot"></div>
-          <div class="timeline__card">
-            <h3 class="timeline__role">Data Analyst Intern</h3>
-            <p class="timeline__company">HACA — Calicut, India</p>
-            <p class="timeline__date">January 2026 – July 2026</p>
-            <p class="timeline__description">
-              Collected and consolidated multi-source data including customer interviews, feedback surveys,
-              web scraping, and secondary research to support business intelligence and marketing analysis initiatives.
-            </p>
-            <ul class="timeline__bullets">
-              <li>Cleaned, transformed, and validated large datasets using Python and Excel, surfacing trends in customer behaviour, campaign performance, audience engagement, and competitive market positioning.</li>
-              <li>Built interactive Power BI dashboards and KPI reports to visualize business performance, track marketing effectiveness, and deliver actionable insights to stakeholders.</li>
-              <li>Performed competitor benchmarking and target audience analysis to evaluate marketing strategy alignment with intended customer segments, identifying growth opportunities.</li>
-              <li>Presented findings to Team Leads, Project Leads, and the CEO in weekly review meetings, diagnosing business challenges and proposing optimization strategies.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       SECTION 5: PROJECTS
-       ============================================================ -->
-  <section class="section section--alt projects" id="projects" data-index="4">
+  <section class="section section--alt projects" id="projects" data-index="3">
     <span class="section__label">My Projects</span>
-    <span class="section__number">04 / 05</span>
+    <span class="section__number">03 / 04</span>
     <div class="section__inner">
       <h2 class="section__heading fade-item">Featured <span>Projects</span></h2>
       <div class="section__divider fade-item"></div>
 
       <div class="projects__grid fade-item">
-        <!-- Project 1 -->
+        <!-- Project 1: Logo Style -->
         <div class="project-card">
+          <div class="project-card__logo-wrapper">
+            <img src="./project_logo.png" alt="Data Sync Analytics Logo" class="project-card__logo">
+          </div>
           <p class="project-card__number">PROJECT 01</p>
+          <h3 class="project-card__title">Data Sync Analytics Pipeline</h3>
+          <div class="project-card__tags">
+            <span class="project-card__tag">Python</span>
+            <span class="project-card__tag">AWS</span>
+            <span class="project-card__tag">Airflow</span>
+          </div>
+          <ul class="project-card__bullets">
+            <li>Designed and deployed an automated ETL data pipeline aggregating daily metrics from 5 distinct sources.</li>
+            <li>Reduced data processing time by 40% using optimized Airflow DAGs.</li>
+            <li>Maintained 99.9% data integrity across the corporate data warehouse.</li>
+          </ul>
+        </div>
+
+        <!-- Project 2: Photo Style -->
+        <div class="project-card">
+          <div class="project-card__image-container">
+            <img src="./project_photo_1.png" alt="Customer Retention Dashboard" class="project-card__image">
+          </div>
+          <p class="project-card__number">PROJECT 02</p>
           <h3 class="project-card__title">Customer Retention & Churn Analytics</h3>
           <div class="project-card__tags">
             <span class="project-card__tag">Python</span>
             <span class="project-card__tag">SQL</span>
             <span class="project-card__tag">Power BI</span>
-            <span class="project-card__tag">DAX</span>
-            <span class="project-card__tag">Excel</span>
           </div>
           <ul class="project-card__bullets">
-            <li>Engineered structured datasets through SQL-based extraction and Python feature engineering to support predictive business modelling.</li>
-            <li>Built ML classification models (Logistic Regression, Random Forest) to forecast customer churn risk.</li>
-            <li>Designed an interactive Power BI dashboard with advanced DAX measures to track Churn Rate, CLV, and customer segmentation.</li>
-            <li>Identified high-value at-risk customer cohorts and delivered data-backed retention strategies.</li>
+            <li>Engineered structured datasets to support predictive business modelling.</li>
+            <li>Built ML classification models to forecast customer churn risk.</li>
+            <li>Designed an interactive Power BI dashboard tracking Churn Rate and CLV.</li>
           </ul>
         </div>
 
-        <!-- Project 2 -->
+        <!-- Project 3: Logo Style -->
         <div class="project-card">
-          <p class="project-card__number">PROJECT 02</p>
-          <h3 class="project-card__title">Enterprise HR Analytics & Workforce Intelligence Platform</h3>
+          <div class="project-card__logo-wrapper">
+            <img src="./project3_logo.jpg" alt="Project 3 App Logo" class="project-card__logo">
+          </div>
+          <p class="project-card__number">PROJECT 03</p>
+          <h3 class="project-card__title">Enterprise HR Workforce Intelligence</h3>
           <div class="project-card__tags">
             <span class="project-card__tag">AI Agents</span>
-            <span class="project-card__tag">CI/CD</span>
             <span class="project-card__tag">Vercel</span>
-            <span class="project-card__tag">RBAC</span>
-          </div>
-          <ul class="project-card__bullets">
-            <li>Architected a full-stack HRMS with role-based access control, payroll modules, workflow automation, and secure admin dashboards.</li>
-            <li>Built analytics dashboards for employee performance monitoring, workforce insights, and HR decision support.</li>
-            <li>Deployed on Vercel with automated CI/CD pipelines ensuring scalability and uptime.</li>
-          </ul>
-        </div>
-
-        <!-- Project 3 -->
-        <div class="project-card">
-          <p class="project-card__number">PROJECT 03</p>
-          <h3 class="project-card__title">Gen Z Political Trust & Engagement Analysis (Kerala)</h3>
-          <div class="project-card__tags">
             <span class="project-card__tag">Power BI</span>
             <span class="project-card__tag">Survey Analytics</span>
             <span class="project-card__tag">Data Viz</span>
@@ -493,14 +502,46 @@
         </div>
       </div>
     </div>
+    
+    <!-- Technical Proficiency Popup Overlay -->
+    <div class="tech-popup" id="techPopup">
+      <h3 class="tech-popup__title">Technical Proficiency</h3>
+      <div class="tech-popup__content">
+        <div class="tech-layout">
+          <!-- Left: Logo Grid -->
+          <div class="tech-grid">
+            <button class="tech-logo-btn" data-tech="python">
+              <div class="tech-logo-icon">PY</div>
+              <span>Python</span>
+            </button>
+            <button class="tech-logo-btn" data-tech="sql">
+              <div class="tech-logo-icon">SQL</div>
+              <span>SQL</span>
+            </button>
+            <button class="tech-logo-btn" data-tech="powerbi">
+              <div class="tech-logo-icon">PBI</div>
+              <span>Power BI</span>
+            </button>
+            <button class="tech-logo-btn" data-tech="excel">
+              <div class="tech-logo-icon">XLS</div>
+              <span>Excel</span>
+            </button>
+          </div>
+          <!-- Right: Details Panel -->
+          <div class="tech-details" id="techDetails">
+            <p class="tech-details__placeholder">Select a technology to view details.</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ============================================================
        SECTION 5: CONTACT
        ============================================================ -->
-  <section class="section section--blue contact" id="contact" data-index="5">
+  <section class="section section--blue contact" id="contact" data-index="4">
     <span class="section__label">Get In Touch</span>
-    <span class="section__number">05 / 05</span>
+    <span class="section__number">04 / 04</span>
     <div class="section__inner">
       <h2 class="section__heading fade-item">Let's <span style="color:rgba(255,255,255,0.6)">Connect</span></h2>
       <div class="section__divider fade-item"></div>

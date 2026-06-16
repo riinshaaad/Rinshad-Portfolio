@@ -22,6 +22,9 @@
   // ---------------------------------------------------------------
   let currentIndex = 0;
   let isTransitioning = false;
+  let isExperiencePopupOpen = false;
+  let isExperience2PopupOpen = false;
+  let isTechPopupOpen = false;
   const totalSections = sections.length;
   const TRANSITION_DURATION = 700; // ms — slightly longer than CSS for safety
 
@@ -31,10 +34,77 @@
   // ---------------------------------------------------------------
   // Section Navigation
   // ---------------------------------------------------------------
+  function toggleExperiencePopup(show) {
+    if (isTransitioning) return;
+    const popup = document.getElementById('experiencePopup');
+    if (!popup) return;
+    
+    isTransitioning = true;
+    isExperiencePopupOpen = show;
+    
+    if (show) {
+      popup.classList.add('experience-popup--active');
+    } else {
+      popup.classList.remove('experience-popup--active');
+    }
+    
+    setTimeout(() => {
+      isTransitioning = false;
+    }, TRANSITION_DURATION);
+  }
+
+  function toggleExperience2Popup(show) {
+    if (isTransitioning) return;
+    const popup = document.getElementById('experience2Popup');
+    if (!popup) return;
+    
+    isTransitioning = true;
+    isExperience2PopupOpen = show;
+    
+    if (show) {
+      popup.classList.add('experience-popup--active');
+    } else {
+      popup.classList.remove('experience-popup--active');
+    }
+    
+    setTimeout(() => {
+      isTransitioning = false;
+    }, TRANSITION_DURATION);
+  }
+
+  function toggleTechPopup(show) {
+    if (isTransitioning) return;
+    const popup = document.getElementById('techPopup');
+    if (!popup) return;
+    
+    isTransitioning = true;
+    isTechPopupOpen = show;
+    
+    if (show) {
+      popup.classList.add('tech-popup--active');
+    } else {
+      popup.classList.remove('tech-popup--active');
+    }
+    
+    setTimeout(() => {
+      isTransitioning = false;
+    }, TRANSITION_DURATION);
+  }
+
   function goToSection(targetIndex, skipAnimation = false) {
     if (isTransitioning) return;
     if (targetIndex < 0 || targetIndex >= totalSections) return;
     if (targetIndex === currentIndex) return;
+
+    if (isExperiencePopupOpen) {
+      toggleExperiencePopup(false);
+    }
+    if (isExperience2PopupOpen) {
+      toggleExperience2Popup(false);
+    }
+    if (isTechPopupOpen) {
+      toggleTechPopup(false);
+    }
 
     isTransitioning = true;
 
@@ -278,9 +348,25 @@
 
     if (Math.abs(wheelAccumulator) >= WHEEL_THRESHOLD) {
       if (wheelAccumulator > 0) {
-        goToSection(currentIndex + 1);
+        if (currentIndex === 2 && !isExperiencePopupOpen) {
+          toggleExperiencePopup(true);
+        } else if (currentIndex === 2 && isExperiencePopupOpen && !isExperience2PopupOpen) {
+          toggleExperience2Popup(true);
+        } else if (currentIndex === 3 && !isTechPopupOpen) {
+          toggleTechPopup(true);
+        } else {
+          goToSection(currentIndex + 1);
+        }
       } else {
-        goToSection(currentIndex - 1);
+        if (currentIndex === 2 && isExperience2PopupOpen) {
+          toggleExperience2Popup(false);
+        } else if (currentIndex === 2 && isExperiencePopupOpen && !isExperience2PopupOpen) {
+          toggleExperiencePopup(false);
+        } else if (currentIndex === 3 && isTechPopupOpen) {
+          toggleTechPopup(false);
+        } else {
+          goToSection(currentIndex - 1);
+        }
       }
       wheelAccumulator = 0;
     }
@@ -297,13 +383,29 @@
       case 'ArrowRight':
       case 'PageDown':
         e.preventDefault();
-        goToSection(currentIndex + 1);
+        if (currentIndex === 2 && !isExperiencePopupOpen) {
+          toggleExperiencePopup(true);
+        } else if (currentIndex === 2 && isExperiencePopupOpen && !isExperience2PopupOpen) {
+          toggleExperience2Popup(true);
+        } else if (currentIndex === 3 && !isTechPopupOpen) {
+          toggleTechPopup(true);
+        } else {
+          goToSection(currentIndex + 1);
+        }
         break;
       case 'ArrowUp':
       case 'ArrowLeft':
       case 'PageUp':
         e.preventDefault();
-        goToSection(currentIndex - 1);
+        if (currentIndex === 2 && isExperience2PopupOpen) {
+          toggleExperience2Popup(false);
+        } else if (currentIndex === 2 && isExperiencePopupOpen && !isExperience2PopupOpen) {
+          toggleExperiencePopup(false);
+        } else if (currentIndex === 3 && isTechPopupOpen) {
+          toggleTechPopup(false);
+        } else {
+          goToSection(currentIndex - 1);
+        }
         break;
       case 'Home':
         e.preventDefault();
@@ -342,18 +444,30 @@
       // Vertical swipe
       if (Math.abs(diffY) > SWIPE_THRESHOLD) {
         if (diffY > 0) {
-          goToSection(currentIndex + 1); // Swipe up → next
+          if (currentIndex === 2 && !isExperiencePopupOpen) toggleExperiencePopup(true);
+          else if (currentIndex === 2 && isExperiencePopupOpen && !isExperience2PopupOpen) toggleExperience2Popup(true);
+          else if (currentIndex === 3 && !isTechPopupOpen) toggleTechPopup(true);
+          else goToSection(currentIndex + 1); // Swipe up → next
         } else {
-          goToSection(currentIndex - 1); // Swipe down → prev
+          if (currentIndex === 2 && isExperience2PopupOpen) toggleExperience2Popup(false);
+          else if (currentIndex === 2 && isExperiencePopupOpen && !isExperience2PopupOpen) toggleExperiencePopup(false);
+          else if (currentIndex === 3 && isTechPopupOpen) toggleTechPopup(false);
+          else goToSection(currentIndex - 1); // Swipe down → prev
         }
       }
     } else {
       // Horizontal swipe
       if (Math.abs(diffX) > SWIPE_THRESHOLD) {
         if (diffX > 0) {
-          goToSection(currentIndex + 1); // Swipe left → next
+          if (currentIndex === 2 && !isExperiencePopupOpen) toggleExperiencePopup(true);
+          else if (currentIndex === 2 && isExperiencePopupOpen && !isExperience2PopupOpen) toggleExperience2Popup(true);
+          else if (currentIndex === 3 && !isTechPopupOpen) toggleTechPopup(true);
+          else goToSection(currentIndex + 1); // Swipe left → next
         } else {
-          goToSection(currentIndex - 1); // Swipe right → prev
+          if (currentIndex === 2 && isExperience2PopupOpen) toggleExperience2Popup(false);
+          else if (currentIndex === 2 && isExperiencePopupOpen && !isExperience2PopupOpen) toggleExperiencePopup(false);
+          else if (currentIndex === 3 && isTechPopupOpen) toggleTechPopup(false);
+          else goToSection(currentIndex - 1); // Swipe right → prev
         }
       }
     }
@@ -554,7 +668,7 @@
     // ---------------------------------------------------------------
     // IMPORTANT: Replace the string below with your free Google Gemini API key.
     // Get one at: https://aistudio.google.com/app/apikey
-    const GEMINI_API_KEY = 'YOUR_API_KEY_HERE'; 
+    const GEMINI_API_KEY = 'AIzaSyCtGaTuCFloJn8egtA6-xRK6wWEdKGaCJs'; 
 
     let chatHistory = [];
 
@@ -573,14 +687,11 @@ Tools he knows: Power BI, Tableau, SQL, Python (Pandas, NumPy, Matplotlib), MS E
 Work experience: Built ML models, HR intelligence platforms, customer retention dashboards, survey analysis, automated MIS reports, and business process workflows.
 Contact: riinshaaadp@gmail.com or +91 8590438183, located in Kerala, India.
 
-CRITICAL INSTRUCTION FOR "WHY HIRE" QUESTIONS:
-If a user asks why they should hire a data analyst, business analyst, or MIS analyst, or how any of these roles can grow a business:
-1. You MUST start the response exactly with: "Hiring an Analyst like Rinshad..."
-2. Give a brief, perfect explanation of how the relevant analyst role directly drives business growth.
-3. Do NOT mention or refer to his "resume" or "cv".
-4. Do NOT mention his specific projects first. Explain the general benefits first.
-5. Close by listing his contact details (riinshaaadp@gmail.com, +91 8590438183).
-6. Keep the entire response extremely short and concise (under 3 sentences total).
+When visitors ask why they should hire a data analyst or business analyst:
+Start your response with: "Hiring an Analyst like Rinshad..."
+Explain how the role drives business growth.
+Do not mention his specific projects first. Explain the general benefits first.
+End by listing his contact details (riinshaaadp@gmail.com, +91 8590438183).
 
 If a user asks what roles Rinshad can do, mention all three: Data Analyst, Business Analyst, and MIS Analyst, with a one-line summary of each.
 
@@ -720,6 +831,8 @@ Keep ALL responses extremely short, concise, and direct (maximum 2-3 sentences o
   // Initialize
   // ---------------------------------------------------------------
   function init() {
+    initTechPopup();
+    
     // Set initial section positions
     sections.forEach((section, i) => {
       if (i !== 0) {
@@ -828,6 +941,49 @@ Keep ALL responses extremely short, concise, and direct (maximum 2-3 sentences o
     wrapper.addEventListener('touchend', () => {
       isDragging = false;
       wrapper.classList.remove('is-dragging');
+    });
+  }
+
+  // ---------------------------------------------------------------
+  // Tech Proficiency Popup Logic
+  // ---------------------------------------------------------------
+  function initTechPopup() {
+    const techBtns = document.querySelectorAll('.tech-logo-btn');
+    const techDetails = document.getElementById('techDetails');
+    if (!techBtns.length || !techDetails) return;
+
+    const techInfo = {
+      python: `
+        <h4 style="color:var(--primary); font-size:1.5rem; margin-bottom:10px;">Python</h4>
+        <p style="color:var(--white-80); line-height:1.6;">Extensive experience in data manipulation, automated ETL pipelines, and machine learning. Proficient in Pandas, NumPy, Scikit-Learn, and automation scripting for extracting insights from unstructured data.</p>
+      `,
+      sql: `
+        <h4 style="color:var(--primary); font-size:1.5rem; margin-bottom:10px;">SQL</h4>
+        <p style="color:var(--white-80); line-height:1.6;">Advanced query writing, database management, and data extraction. Skilled in complex Joins, Window Functions, CTEs, and optimizing query performance for large-scale enterprise databases.</p>
+      `,
+      powerbi: `
+        <h4 style="color:var(--primary); font-size:1.5rem; margin-bottom:10px;">Power BI</h4>
+        <p style="color:var(--white-80); line-height:1.6;">Designing highly interactive, executive-ready dashboards. Deep knowledge of DAX, data modelling (Star Schemas), and translating complex metrics into intuitive visual narratives.</p>
+      `,
+      excel: `
+        <h4 style="color:var(--primary); font-size:1.5rem; margin-bottom:10px;">Excel</h4>
+        <p style="color:var(--white-80); line-height:1.6;">Advanced data analysis utilizing Pivot Tables, VLOOKUP/XLOOKUP, Power Query, and Macros. Capable of building robust financial models and ad-hoc reporting solutions.</p>
+      `
+    };
+
+    techBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Remove active state from all
+        techBtns.forEach(b => b.classList.remove('active'));
+        // Add active state to clicked
+        btn.classList.add('active');
+        
+        // Update details panel
+        const techId = btn.getAttribute('data-tech');
+        if (techInfo[techId]) {
+          techDetails.innerHTML = techInfo[techId];
+        }
+      });
     });
   }
 
