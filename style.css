@@ -203,12 +203,27 @@ img {
   color: var(--white-50);
 }
 
+#skillsPrefixSpan {
+  color: var(--white);
+}
+
 .section__divider {
   width: 48px;
   height: 4px;
   background: var(--white-50);
   border-radius: var(--radius-full);
   margin-bottom: 32px;
+  /* Animation is applied only when active so it doesn't break fade-in */
+}
+
+.section--active .section__divider {
+  animation: dividerPulse 2.5s ease-in-out infinite;
+  animation-delay: 0.8s; /* Start breathing AFTER the fade-in finishes */
+}
+
+@keyframes dividerPulse {
+  0%, 100% { width: 48px; background: var(--white-50); }
+  50% { width: 16px; background: rgba(255, 255, 255, 0.2); }
 }
 
 /* ===================================================================
@@ -971,13 +986,15 @@ img {
   border-radius: var(--radius-lg);
   padding: 18px 20px; /* Reduced padding to make boxes smaller */
   position: relative;
-  overflow: hidden;
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
               box-shadow 0.4s ease;
+  z-index: 1;
 }
 
-.bento-card:hover {
-  transform: translateY(-4px);
+.bento-card:hover,
+.bento-card:active {
+  transform: translateY(-8px) scale(1.03);
+  z-index: 10;
 }
 
 .bento-card__label {
@@ -1003,9 +1020,10 @@ img {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
 }
 
-.bento-card--glass:hover {
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
-  border-color: rgba(255, 255, 255, 0.18);
+.bento-card--glass:hover,
+.bento-card--glass:active {
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
 /* Solid card — frosted dark theme for education */
@@ -1033,10 +1051,8 @@ img {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(10, 15, 36, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  z-index: 10;
+  background: #0a0f24; /* Solid color to completely hide the background */
+  z-index: 30;
   padding: 30px;
   transform: translateY(100%);
   opacity: 0;
@@ -1044,6 +1060,7 @@ img {
   transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s ease;
   display: flex;
   flex-direction: column;
+  border-radius: inherit;
 }
 
 .experience-popup--active {
@@ -1063,11 +1080,8 @@ img {
 
 .experience-popup__content {
   flex: 1;
-  overflow-y: auto;
+  overflow: visible;
   padding-right: 15px;
-  /* Custom scrollbar for popup */
-  scrollbar-width: thin;
-  scrollbar-color: var(--white-15) transparent;
 }
 
 /* Technical Proficiency Popup Overlay */
@@ -1077,9 +1091,7 @@ img {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(10, 15, 36, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: #0a0f24; /* Solid color to completely hide the background */
   z-index: 100;
   padding: 60px 40px;
   transform: translateY(100%);
@@ -1223,8 +1235,9 @@ img {
   overflow-x: auto;
   overflow-y: hidden;
   position: relative;
-  margin: 0 -20px;
-  padding: 12px 20px;
+  z-index: 20;
+  margin: -40px -20px -20px -20px;
+  padding: 50px 20px 30px 20px;
   cursor: grab;
   mask-image: linear-gradient(90deg,
     transparent 0%,
@@ -1340,88 +1353,12 @@ img {
   letter-spacing: 0.5px;
 }
 
-/* Hover glow state */
+/* Subtle hover effect */
 .skill-icon-card:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: transparent;
-  transform: translateY(-6px) scale(1.05);
-  box-shadow:
-    0 0 10px rgba(255, 255, 255, 0.12),
-    0 0 25px rgba(21, 2, 165, 0.15),
-    0 6px 20px rgba(0, 0, 0, 0.1);
-  z-index: 5;
-}
-
-/* Rotating white glow border on hover */
-.skill-icon-card:hover::after {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  padding: 2px;
-  background: conic-gradient(
-    from var(--glow-angle, 0deg),
-    transparent 0%,
-    rgba(255, 255, 255, 0.9) 10%,
-    rgba(255, 255, 255, 1) 15%,
-    rgba(200, 210, 255, 0.8) 25%,
-    transparent 40%,
-    transparent 60%,
-    rgba(200, 210, 255, 0.6) 75%,
-    rgba(255, 255, 255, 0.9) 85%,
-    rgba(255, 255, 255, 1) 90%,
-    transparent 100%
-  );
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  -webkit-mask-composite: xor;
-  animation: glowBorderSpin 2.5s linear infinite;
-  z-index: -1;
-  pointer-events: none;
-}
-
-@property --glow-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
-
-@keyframes glowBorderSpin {
-  to {
-    --glow-angle: 360deg;
-  }
-}
-
-.skill-icon-card:hover::before {
-  opacity: 1;
-}
-
-.skill-icon-card:hover .skill-icon-card__icon {
-  background: var(--white);
-  transform: scale(1.15);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4),
-              0 4px 16px rgba(0, 0, 0, 0.1);
-}
-
-.skill-icon-card:hover .skill-icon-card__icon svg {
-  color: var(--primary);
-}
-
-.skill-icon-card:hover .skill-icon-card__icon img {
-  /* CSS Filter to turn pure white into #1502A5 (var(--primary)) */
-  filter: brightness(0) saturate(100%) invert(14%) sepia(97%) saturate(5894%) hue-rotate(242deg) brightness(81%) contrast(124%);
-}
-
-.skill-icon-card:hover .skill-icon-card__name {
-  color: var(--white);
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
-}
-
-.skill-icon-card:hover .skill-icon-card__level {
-  background: var(--white);
-  color: var(--primary);
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+  transform: translateY(-4px);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  z-index: 2;
 }
 
 /* --- Education Mini Cards --- */
@@ -1675,14 +1612,17 @@ img {
 }
 
 .project-card {
-  background: var(--white);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: var(--radius-lg);
-  padding: 32px 28px;
-  transition: all 0.4s ease;
+  padding: 20px 16px; /* Further reduced */
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
   overflow: hidden;
   box-shadow: var(--shadow-md);
   color: var(--text-dark);
+  z-index: 1;
 }
 
 .project-card::before {
@@ -1698,9 +1638,11 @@ img {
   transition: transform 0.4s ease;
 }
 
-.project-card:hover {
-  transform: translateY(-6px);
-  box-shadow: var(--shadow-xl);
+.project-card:hover,
+.project-card:active {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), 0 0 20px rgba(21, 2, 165, 0.1);
+  z-index: 10;
 }
 
 .project-card:hover::before {
@@ -1717,11 +1659,12 @@ img {
 }
 
 .project-card__image-container {
-  width: calc(100% + 56px);
-  margin: -32px -28px 24px -28px;
-  height: 200px;
+  width: 100%;
+  margin: 0 0 16px 0;
+  height: 160px; /* Gives the photo a natural proportional size */
+  border-radius: var(--radius-sm);
   overflow: hidden;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
+  background: var(--bg-alt);
 }
 
 .project-card__image {
@@ -1739,11 +1682,11 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 24px;
-  padding: 20px;
+  margin-bottom: 16px;
+  padding: 16px;
   background: var(--bg-alt);
   border-radius: var(--radius-md);
-  height: 120px;
+  height: 100px;
 }
 
 .project-card__logo {
@@ -1753,24 +1696,24 @@ img {
 }
 
 .project-card__title {
-  font-size: 1.12rem;
+  font-size: 1rem; /* Reduced from 1.12rem */
   font-weight: 700;
   color: var(--text-dark);
-  margin-bottom: 14px;
+  margin-bottom: 10px;
   line-height: 1.35;
 }
 
 .project-card__tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 16px;
+  gap: 4px; /* Reduced gap */
+  margin-bottom: 12px;
 }
 
 .project-card__tag {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
-  padding: 4px 10px;
+  font-size: 0.62rem; /* Reduced from 0.68rem */
+  padding: 3px 8px;
   background: rgba(8, 40, 207, 0.08);
   color: var(--primary);
   border-radius: var(--radius-full);
@@ -1781,14 +1724,14 @@ img {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px; /* Reduced from 8px */
 }
 
 .project-card__bullets li {
-  font-size: 0.82rem;
-  line-height: 1.6;
+  font-size: 0.75rem; /* Reduced from 0.82rem */
+  line-height: 1.45; /* Tighter line height */
   color: var(--text-dark-secondary);
-  padding-left: 16px;
+  padding-left: 14px;
   position: relative;
 }
 
@@ -1797,7 +1740,7 @@ img {
   position: absolute;
   left: 0;
   color: var(--primary);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
 }
 
 /* ===================================================================
@@ -2670,6 +2613,7 @@ img {
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
   width: 100%;
+  padding: 24px 8px; /* Added padding to give room for 3D pop-out effect */
 }
 
 .projects-popup-card {
@@ -2683,19 +2627,24 @@ img {
   align-items: center;
   justify-content: flex-start;
   text-align: center;
-  transition: transform 0.3s ease, background 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, background 0.4s ease;
   height: 100%;
+  position: relative;
+  z-index: 1;
 }
 
-.projects-popup-card:hover {
-  transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.07);
+.projects-popup-card:hover,
+.projects-popup-card:active {
+  transform: translateY(-20px) scale(1.15);
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(255, 255, 255, 0.15);
+  z-index: 999;
 }
 
 .projects-popup-img {
   width: 100%;
   height: 100px;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 0;
   margin-bottom: 12px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);

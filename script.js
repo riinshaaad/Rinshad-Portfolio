@@ -24,7 +24,6 @@
   let isTransitioning = false;
   let isExperiencePopupOpen = false;
   let isExperience2PopupOpen = false;
-  let isTechPopupOpen = false;
   const totalSections = sections.length;
   const TRANSITION_DURATION = 700; // ms — slightly longer than CSS for safety
 
@@ -44,8 +43,12 @@
     
     if (show) {
       popup.classList.add('experience-popup--active');
+      const headingSpan = document.getElementById('skillsHeadingSpan');
+      if (headingSpan) headingSpan.textContent = 'Experience';
     } else {
       popup.classList.remove('experience-popup--active');
+      const headingSpan = document.getElementById('skillsHeadingSpan');
+      if (headingSpan) headingSpan.textContent = 'Education';
     }
     
     setTimeout(() => {
@@ -63,8 +66,12 @@
     
     if (show) {
       popup.classList.add('experience-popup--active');
+      const prefixSpan = document.getElementById('skillsPrefixSpan');
+      if (prefixSpan) prefixSpan.textContent = 'Projects';
     } else {
       popup.classList.remove('experience-popup--active');
+      const prefixSpan = document.getElementById('skillsPrefixSpan');
+      if (prefixSpan) prefixSpan.textContent = 'Skills';
     }
     
     setTimeout(() => {
@@ -72,24 +79,7 @@
     }, TRANSITION_DURATION);
   }
 
-  function toggleTechPopup(show) {
-    if (isTransitioning) return;
-    const popup = document.getElementById('techPopup');
-    if (!popup) return;
-    
-    isTransitioning = true;
-    isTechPopupOpen = show;
-    
-    if (show) {
-      popup.classList.add('tech-popup--active');
-    } else {
-      popup.classList.remove('tech-popup--active');
-    }
-    
-    setTimeout(() => {
-      isTransitioning = false;
-    }, TRANSITION_DURATION);
-  }
+
 
   function goToSection(targetIndex, skipAnimation = false) {
     if (isTransitioning) return;
@@ -101,9 +91,6 @@
     }
     if (isExperience2PopupOpen) {
       toggleExperience2Popup(false);
-    }
-    if (isTechPopupOpen) {
-      toggleTechPopup(false);
     }
 
     isTransitioning = true;
@@ -352,8 +339,6 @@
           toggleExperiencePopup(true);
         } else if (currentIndex === 2 && isExperiencePopupOpen && !isExperience2PopupOpen) {
           toggleExperience2Popup(true);
-        } else if (currentIndex === 3 && !isTechPopupOpen) {
-          toggleTechPopup(true);
         } else {
           goToSection(currentIndex + 1);
         }
@@ -362,8 +347,6 @@
           toggleExperience2Popup(false);
         } else if (currentIndex === 2 && isExperiencePopupOpen && !isExperience2PopupOpen) {
           toggleExperiencePopup(false);
-        } else if (currentIndex === 3 && isTechPopupOpen) {
-          toggleTechPopup(false);
         } else {
           goToSection(currentIndex - 1);
         }
@@ -387,8 +370,6 @@
           toggleExperiencePopup(true);
         } else if (currentIndex === 2 && isExperiencePopupOpen && !isExperience2PopupOpen) {
           toggleExperience2Popup(true);
-        } else if (currentIndex === 3 && !isTechPopupOpen) {
-          toggleTechPopup(true);
         } else {
           goToSection(currentIndex + 1);
         }
@@ -401,8 +382,6 @@
           toggleExperience2Popup(false);
         } else if (currentIndex === 2 && isExperiencePopupOpen && !isExperience2PopupOpen) {
           toggleExperiencePopup(false);
-        } else if (currentIndex === 3 && isTechPopupOpen) {
-          toggleTechPopup(false);
         } else {
           goToSection(currentIndex - 1);
         }
@@ -446,12 +425,10 @@
         if (diffY > 0) {
           if (currentIndex === 2 && !isExperiencePopupOpen) toggleExperiencePopup(true);
           else if (currentIndex === 2 && isExperiencePopupOpen && !isExperience2PopupOpen) toggleExperience2Popup(true);
-          else if (currentIndex === 3 && !isTechPopupOpen) toggleTechPopup(true);
           else goToSection(currentIndex + 1); // Swipe up → next
         } else {
           if (currentIndex === 2 && isExperience2PopupOpen) toggleExperience2Popup(false);
           else if (currentIndex === 2 && isExperiencePopupOpen && !isExperience2PopupOpen) toggleExperiencePopup(false);
-          else if (currentIndex === 3 && isTechPopupOpen) toggleTechPopup(false);
           else goToSection(currentIndex - 1); // Swipe down → prev
         }
       }
@@ -461,12 +438,10 @@
         if (diffX > 0) {
           if (currentIndex === 2 && !isExperiencePopupOpen) toggleExperiencePopup(true);
           else if (currentIndex === 2 && isExperiencePopupOpen && !isExperience2PopupOpen) toggleExperience2Popup(true);
-          else if (currentIndex === 3 && !isTechPopupOpen) toggleTechPopup(true);
           else goToSection(currentIndex + 1); // Swipe left → next
         } else {
           if (currentIndex === 2 && isExperience2PopupOpen) toggleExperience2Popup(false);
           else if (currentIndex === 2 && isExperiencePopupOpen && !isExperience2PopupOpen) toggleExperiencePopup(false);
-          else if (currentIndex === 3 && isTechPopupOpen) toggleTechPopup(false);
           else goToSection(currentIndex - 1); // Swipe right → prev
         }
       }
@@ -831,7 +806,6 @@ Keep ALL responses extremely short, concise, and direct (maximum 2-3 sentences o
   // Initialize
   // ---------------------------------------------------------------
   function init() {
-    initTechPopup();
     
     // Set initial section positions
     sections.forEach((section, i) => {
@@ -947,46 +921,6 @@ Keep ALL responses extremely short, concise, and direct (maximum 2-3 sentences o
   // ---------------------------------------------------------------
   // Tech Proficiency Popup Logic
   // ---------------------------------------------------------------
-  function initTechPopup() {
-    const techBtns = document.querySelectorAll('.tech-logo-btn');
-    const techDetails = document.getElementById('techDetails');
-    if (!techBtns.length || !techDetails) return;
-
-    const techInfo = {
-      python: `
-        <h4 style="color:var(--primary); font-size:1.5rem; margin-bottom:10px;">Python</h4>
-        <p style="color:var(--white-80); line-height:1.6;">Extensive experience in data manipulation, automated ETL pipelines, and machine learning. Proficient in Pandas, NumPy, Scikit-Learn, and automation scripting for extracting insights from unstructured data.</p>
-      `,
-      sql: `
-        <h4 style="color:var(--primary); font-size:1.5rem; margin-bottom:10px;">SQL</h4>
-        <p style="color:var(--white-80); line-height:1.6;">Advanced query writing, database management, and data extraction. Skilled in complex Joins, Window Functions, CTEs, and optimizing query performance for large-scale enterprise databases.</p>
-      `,
-      powerbi: `
-        <h4 style="color:var(--primary); font-size:1.5rem; margin-bottom:10px;">Power BI</h4>
-        <p style="color:var(--white-80); line-height:1.6;">Designing highly interactive, executive-ready dashboards. Deep knowledge of DAX, data modelling (Star Schemas), and translating complex metrics into intuitive visual narratives.</p>
-      `,
-      excel: `
-        <h4 style="color:var(--primary); font-size:1.5rem; margin-bottom:10px;">Excel</h4>
-        <p style="color:var(--white-80); line-height:1.6;">Advanced data analysis utilizing Pivot Tables, VLOOKUP/XLOOKUP, Power Query, and Macros. Capable of building robust financial models and ad-hoc reporting solutions.</p>
-      `
-    };
-
-    techBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        // Remove active state from all
-        techBtns.forEach(b => b.classList.remove('active'));
-        // Add active state to clicked
-        btn.classList.add('active');
-        
-        // Update details panel
-        const techId = btn.getAttribute('data-tech');
-        if (techInfo[techId]) {
-          techDetails.innerHTML = techInfo[techId];
-        }
-      });
-    });
-  }
-
   // Wait for DOM
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
