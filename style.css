@@ -1244,28 +1244,46 @@ img {
   border-color: rgba(255, 255, 255, 0.2);
 }
 
-/* --- Skill Marquee (Vertical Scroll) --- */
+/* --- Skill Marquee (horizontal auto-scroll + drag) --- */
 .skill-marquee-wrapper {
+  overflow-x: auto;
+  overflow-y: hidden;
   position: relative;
   z-index: 20;
-  height: 380px;
-  overflow: hidden;
-  margin: -10px -10px;
-  padding: 20px 10px;
-  mask-image: linear-gradient(180deg, transparent 0%, black 10%, black 90%, transparent 100%);
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 10%, black 90%, transparent 100%);
+  margin: -40px -20px -20px -20px;
+  padding: 50px 20px 30px 20px;
+  cursor: grab;
+  mask-image: linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 6%, black 94%, transparent 100%);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.skill-marquee-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.skill-marquee-wrapper:active {
+  cursor: grabbing;
 }
 
 .skill-marquee {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 14px;
+  width: max-content;
+  animation: skillScroll 45s linear infinite;
   padding: 10px 0;
-  animation: skillScrollVertical 20s linear infinite;
 }
 
-.skill-marquee:hover {
+.skill-marquee:hover,
+.skill-marquee-wrapper.is-dragging .skill-marquee {
   animation-play-state: paused;
+}
+
+@keyframes skillScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 @keyframes skillScrollVertical {
@@ -2208,6 +2226,22 @@ img {
   .bento-grid {
     grid-template-columns: 1fr;
     gap: 16px;
+  }
+
+  .skill-marquee-wrapper {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 380px;
+    margin: -10px -10px;
+    padding: 20px 10px;
+    mask-image: linear-gradient(180deg, transparent 0%, black 10%, black 90%, transparent 100%);
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 10%, black 90%, transparent 100%);
+  }
+
+  .skill-marquee {
+    flex-direction: column;
+    width: auto;
+    animation: skillScrollVertical 20s linear infinite;
   }
 
   .contact__grid {
