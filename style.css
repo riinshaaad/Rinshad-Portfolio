@@ -734,6 +734,20 @@ img {
   opacity: 1;
 }
 
+.btn--whatsapp {
+  background: #25D366;
+  color: var(--white);
+  border-color: #25D366;
+  box-shadow: 0 8px 30px rgba(37, 211, 102, 0.3);
+}
+
+.btn--whatsapp:hover {
+  background: #1ebe57;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(37, 211, 102, 0.45);
+  opacity: 1;
+}
+
 /* ===================================================================
    2. ABOUT SECTION
    =================================================================== */
@@ -1230,57 +1244,33 @@ img {
   border-color: rgba(255, 255, 255, 0.2);
 }
 
-/* --- Skill Marquee (horizontal auto-scroll + drag) --- */
+/* --- Skill Marquee (Vertical Scroll) --- */
 .skill-marquee-wrapper {
-  overflow-x: auto;
-  overflow-y: hidden;
   position: relative;
   z-index: 20;
-  margin: -40px -20px -20px -20px;
-  padding: 50px 20px 30px 20px;
-  cursor: grab;
-  mask-image: linear-gradient(90deg,
-    transparent 0%,
-    black 6%,
-    black 94%,
-    transparent 100%);
-  -webkit-mask-image: linear-gradient(90deg,
-    transparent 0%,
-    black 6%,
-    black 94%,
-    transparent 100%);
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.skill-marquee-wrapper::-webkit-scrollbar {
-  display: none;
-}
-
-.skill-marquee-wrapper:active {
-  cursor: grabbing;
+  height: 380px;
+  overflow: hidden;
+  margin: -10px -10px;
+  padding: 20px 10px;
+  mask-image: linear-gradient(180deg, transparent 0%, black 10%, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 10%, black 90%, transparent 100%);
 }
 
 .skill-marquee {
   display: flex;
+  flex-direction: column;
   gap: 14px;
-  width: max-content;
-  animation: skillScroll 45s linear infinite;
   padding: 10px 0;
+  animation: skillScrollVertical 20s linear infinite;
 }
 
-.skill-marquee:hover,
-.skill-marquee-wrapper.is-dragging .skill-marquee {
+.skill-marquee:hover {
   animation-play-state: paused;
 }
 
-@keyframes skillScroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+@keyframes skillScrollVertical {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
 }
 
 .skill-icon-card {
@@ -1743,6 +1733,70 @@ img {
   font-size: 0.75rem;
 }
 
+/* Project Card Highlight Animation (when navigated from popup) */
+.project-card--highlighted {
+  animation: projectHighlightPulse 5.5s ease-out forwards;
+  z-index: 20 !important;
+  outline: 2.5px solid rgba(79, 109, 255, 0.9);
+  outline-offset: 3px;
+}
+
+@keyframes projectHighlightPulse {
+  0% {
+    transform: scale(1) translateY(0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    outline-color: rgba(79, 109, 255, 0);
+    outline-offset: 8px;
+  }
+  5% {
+    transform: scale(1.07) translateY(-12px);
+    box-shadow:
+      0 24px 60px rgba(8, 40, 207, 0.4),
+      0 0 50px rgba(79, 109, 255, 0.3),
+      0 0 100px rgba(8, 40, 207, 0.12);
+    outline-color: rgba(79, 109, 255, 1);
+    outline-offset: 3px;
+  }
+  15% {
+    transform: scale(1.05) translateY(-10px);
+    box-shadow:
+      0 20px 50px rgba(8, 40, 207, 0.35),
+      0 0 40px rgba(79, 109, 255, 0.25),
+      0 0 80px rgba(8, 40, 207, 0.1);
+    outline-color: rgba(79, 109, 255, 0.9);
+    outline-offset: 3px;
+  }
+  45% {
+    transform: scale(1.04) translateY(-8px);
+    box-shadow:
+      0 18px 45px rgba(8, 40, 207, 0.3),
+      0 0 35px rgba(79, 109, 255, 0.2);
+    outline-color: rgba(79, 109, 255, 0.8);
+    outline-offset: 3px;
+  }
+  65% {
+    transform: scale(1.03) translateY(-6px);
+    box-shadow:
+      0 14px 35px rgba(8, 40, 207, 0.2),
+      0 0 25px rgba(79, 109, 255, 0.15);
+    outline-color: rgba(79, 109, 255, 0.5);
+    outline-offset: 4px;
+  }
+  85% {
+    transform: scale(1.01) translateY(-2px);
+    box-shadow:
+      0 6px 16px rgba(8, 40, 207, 0.08);
+    outline-color: rgba(79, 109, 255, 0.15);
+    outline-offset: 6px;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    outline-color: rgba(79, 109, 255, 0);
+    outline-offset: 8px;
+  }
+}
+
 /* ===================================================================
    6. EDUCATION SECTION
    =================================================================== */
@@ -1840,6 +1894,30 @@ img {
 
 .contact .section__heading span {
   color: var(--primary);
+}
+
+.shimmer-text {
+  background: linear-gradient(
+    110deg,
+    #1502A5 0%,
+    #1502A5 40%,
+    #412af5 50%,
+    #1502A5 60%,
+    #1502A5 100%
+  );
+  background-size: 200% auto;
+  color: #1502A5; /* Fallback */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 5.5s linear infinite;
+  display: inline-block;
+}
+
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
 }
 
 .contact .section__divider {
@@ -1988,7 +2066,7 @@ img {
   resize: vertical;
 }
 
-.contact__form .btn--dark {
+.contact__form .btn--whatsapp {
   align-self: flex-start;
   margin-top: 4px;
 }
@@ -2072,7 +2150,14 @@ img {
 @media (max-width: 900px) {
   .section__inner {
     padding: 60px 24px;
-    min-height: auto !important; /* Prevent vertical overflow squishing */
+    height: 100vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+  }
+  
+  .section__inner::-webkit-scrollbar {
+    display: none;
   }
 
   .section__heading {
@@ -2158,7 +2243,7 @@ img {
 
 @media (max-width: 600px) {
   .section__inner {
-    padding: 40px 16px;
+    padding: 30px 16px;
   }
 
   .section__heading {
@@ -2175,27 +2260,28 @@ img {
   }
 
   .profile {
-    padding: 60px 16px 40px;
+    padding: 40px 16px 30px;
   }
 
   .profile__group {
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
     margin-top: 20px;
   }
 
   .profile__name {
-    font-size: 2.2rem;
-    letter-spacing: -1px;
+    font-size: 1.8rem;
+    letter-spacing: -0.5px;
   }
 
   .profile__title {
-    font-size: 0.9rem;
-    letter-spacing: 4px;
+    font-size: 0.85rem;
+    letter-spacing: 3px;
   }
 
   .profile__bio {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
   }
 
   .profile__cta {
@@ -2208,9 +2294,33 @@ img {
     justify-content: center;
   }
 
+  .profile__contact {
+    font-size: 0.85rem;
+  }
+
+  .about__text p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
   .about__stats {
     grid-template-columns: 1fr;
     gap: 12px;
+  }
+
+  .education__grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .edu-card {
+    padding: 20px 16px;
+  }
+
+  .edu-card__icon {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 12px;
   }
 
   .form-row {
@@ -2248,6 +2358,15 @@ img {
   .nav-dot {
     width: 8px;
     height: 8px;
+  }
+
+  .experience-popup {
+    width: 90vw;
+    padding: 30px 20px;
+  }
+
+  .tech-popup {
+    padding: 40px 20px;
   }
 }
 

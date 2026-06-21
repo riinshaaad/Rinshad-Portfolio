@@ -320,10 +320,29 @@
   const WHEEL_THRESHOLD = 50;
   let wheelTimeout = null;
 
-  function handleWheel(e) {
-    e.preventDefault();
+  // Helper to check if an element can natively scroll without hitting boundaries
+  function isScrollableAndNotAtBoundary(target, direction) {
+    const scrollContainer = target.closest('.section__inner, .experience-popup__content, .tech-popup, .chatbot-messages');
+    if (!scrollContainer) return false;
 
+    const style = window.getComputedStyle(scrollContainer);
+    if (style.overflowY !== 'auto' && style.overflowY !== 'scroll') return false;
+
+    if (direction > 0) { // scrolling down (content moves up)
+      return scrollContainer.scrollTop + scrollContainer.clientHeight < scrollContainer.scrollHeight - 2;
+    } else { // scrolling up (content moves down)
+      return scrollContainer.scrollTop > 2;
+    }
+  }
+
+  function handleWheel(e) {
     if (isTransitioning) return;
+
+    if (isScrollableAndNotAtBoundary(e.target, e.deltaY)) {
+      return; // allow native scroll
+    }
+
+    e.preventDefault();
 
     wheelAccumulator += e.deltaY;
 
@@ -422,6 +441,11 @@
     if (Math.abs(diffY) > Math.abs(diffX)) {
       // Vertical swipe
       if (Math.abs(diffY) > SWIPE_THRESHOLD) {
+        // Prevent sliding to next section if the user is scrolling text natively
+        if (isScrollableAndNotAtBoundary(e.target, diffY)) {
+          return;
+        }
+
         if (diffY > 0) {
           if (currentIndex === 2 && !isExperiencePopupOpen) toggleExperiencePopup(true);
           else if (currentIndex === 2 && isExperiencePopupOpen && !isExperience2PopupOpen) toggleExperience2Popup(true);
@@ -483,21 +507,33 @@
     form.addEventListener('submit', (e) => {
       e.preventDefault();
 
-      const btn = form.querySelector('.btn--dark');
+      const name = document.getElementById('contactName').value.trim();
+      const message = document.getElementById('contactMessage').value.trim();
+      if (!name || !message) return;
+
+      // Build WhatsApp message
+      const phone = '918590438183';
+      const text = `Hi Rinshad, I'm ${name}.\n\n${message}`;
+      const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+
+      const btn = form.querySelector('.btn--whatsapp');
       const originalHTML = btn.innerHTML;
 
       // Animate button
       btn.innerHTML = `
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        Message Sent!
+        Opening WhatsApp...
       `;
       btn.style.pointerEvents = 'none';
+
+      // Open WhatsApp
+      window.open(waUrl, '_blank');
 
       setTimeout(() => {
         btn.innerHTML = originalHTML;
         btn.style.pointerEvents = '';
         form.reset();
-      }, 3000);
+      }, 2500);
     });
   }
 
@@ -803,6 +839,59 @@ Keep ALL responses extremely short, concise, and direct (maximum 2-3 sentences o
   }
 
   // ---------------------------------------------------------------
+  // Project Card Navigation (Popup → Projects Section with Highlight)
+  // ---------------------------------------------------------------
+  function initProjectLinks() {
+    const popupCards = document.querySelectorAll('[data-project-target]');
+
+    popupCards.forEach(card => {
+      card.style.cursor = 'pointer';
+
+      card.addEventListener('click', () => {
+        const targetId = card.getAttribute('data-project-target');
+        if (!targetId) return;
+
+        // Silently reset popup state (no animation) so they don't fly around
+        const popup1 = document.getElementById('experiencePopup');
+        const popup2 = document.getElementById('experience2Popup');
+        if (popup2) popup2.classList.remove('experience-popup--active');
+        if (popup1) popup1.classList.remove('experience-popup--active');
+        isExperience2PopupOpen = false;
+        isExperiencePopupOpen = false;
+        isTransitioning = false;
+
+        // Restore heading text
+        const headingSpan = document.getElementById('skillsHeadingSpan');
+        if (headingSpan) headingSpan.textContent = 'Education';
+        const prefixSpan = document.getElementById('skillsPrefixSpan');
+        if (prefixSpan) prefixSpan.textContent = 'Skills';
+
+        // Navigate to Projects section (index 3)
+        goToSection(3);
+
+        // After section transition, highlight the target project card
+        setTimeout(() => {
+          const targetCard = document.getElementById(targetId);
+          if (!targetCard) return;
+
+          // Remove any existing highlights
+          document.querySelectorAll('.project-card--highlighted').forEach(c => {
+            c.classList.remove('project-card--highlighted');
+          });
+
+          // Add highlight class
+          targetCard.classList.add('project-card--highlighted');
+
+          // Remove highlight after animation completes
+          setTimeout(() => {
+            targetCard.classList.remove('project-card--highlighted');
+            }, 5700);
+        }, TRANSITION_DURATION + 100);
+      });
+    });
+  }
+
+  // ---------------------------------------------------------------
   // Initialize
   // ---------------------------------------------------------------
   function init() {
@@ -843,6 +932,7 @@ Keep ALL responses extremely short, concise, and direct (maximum 2-3 sentences o
     prepareAboutText();
     initChatbot();
     initSkillMarquee();
+    initProjectLinks();
   }
 
   // ---------------------------------------------------------------
