@@ -2166,22 +2166,51 @@ img {
    =================================================================== */
 
 @media (max-width: 900px) {
-  .section__inner {
-    padding: 60px 24px;
-    height: 100vh;
+  body {
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-y: contain;
+    overflow-x: hidden;
+    height: auto;
   }
   
-  .section__inner::-webkit-scrollbar {
-    display: none;
+  .section {
+    position: relative !important;
+    transform: none !important;
+    opacity: 1 !important;
+    height: auto !important;
+    min-height: 100vh;
+    z-index: 1 !important;
+  }
+  
+  .fade-item {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .section__inner {
+    padding: 60px 24px;
+    height: auto;
+    overflow-y: visible;
   }
 
   .section__heading {
     font-size: 1.9rem;
   }
 
+  /* Display popups inline on mobile */
+  .experience-popup {
+    position: relative !important;
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    background: transparent !important;
+    height: auto !important;
+    padding: 24px 0 0 0 !important;
+    margin-top: 24px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
   .skills-edu .section__heading {
     margin-top: 0; /* Reset explicit desktop margin */
   }
@@ -2227,6 +2256,47 @@ img {
     grid-template-columns: 1fr;
     gap: 16px;
   }
+  
+  /* Flatten UI Elements for clean minimalist look */
+  .bento-card--solid, .bento-card--glass, .bento-card--gradient {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  
+  .bento-card:hover, .bento-card:active {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Disable distracting continuous animations */
+  .hero__photo-circle, .profile__circle {
+    animation: none !important;
+    box-shadow: none !important;
+    transition: none !important;
+    background: var(--primary-dark) !important;
+  }
+  
+  .chatbot-toggle::before {
+    animation: none !important;
+    background: transparent !important;
+  }
+  
+  .i-dot {
+    animation: none !important;
+    box-shadow: none !important;
+  }
+  
+  /* Flat buttons */
+  .btn {
+    box-shadow: none !important;
+  }
+  .btn:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
 
   .skill-marquee-wrapper {
     overflow-x: hidden;
@@ -2255,18 +2325,10 @@ img {
     grid-template-columns: 1fr;
   }
 
-  .nav-dots {
-    right: 14px;
-    gap: 12px;
-  }
-
-  .nav-dot {
-    width: 10px;
-    height: 10px;
-  }
-
-  .nav-dot::before {
-    display: none;
+  .nav-dots,
+  .progress-top,
+  .scroll-indicator {
+    display: none !important;
   }
 
   .section__label,
@@ -2392,11 +2454,6 @@ img {
   .nav-dot {
     width: 8px;
     height: 8px;
-  }
-
-  .experience-popup {
-    width: 90vw;
-    padding: 30px 20px;
   }
 
   .tech-popup {

@@ -231,6 +231,7 @@
   const aboutTextEl = document.querySelector('.about__text');
 
   function prepareAboutText() {
+    if (window.innerWidth <= 900) return;
     if (!aboutTextEl) return;
     aboutOriginalText = aboutTextEl.textContent.replace(/\s+/g, ' ').trim();
     aboutTextEl.textContent = '';
@@ -336,6 +337,7 @@
   }
 
   function handleWheel(e) {
+    if (window.innerWidth <= 900) return;
     if (isTransitioning) return;
 
     if (isScrollableAndNotAtBoundary(e.target, e.deltaY)) {
@@ -378,6 +380,7 @@
   // Keyboard Navigation
   // ---------------------------------------------------------------
   function handleKeydown(e) {
+    if (window.innerWidth <= 900) return;
     if (isTransitioning) return;
 
     switch (e.key) {
@@ -429,6 +432,7 @@
   }
 
   function handleTouchEnd(e) {
+    if (window.innerWidth <= 900) return;
     if (isTransitioning) return;
 
     const touchEndX = e.changedTouches[0].screenX;
@@ -908,6 +912,12 @@ Keep ALL responses extremely short, concise, and direct (maximum 2-3 sentences o
       sections[0].classList.add('section--active');
     }, 100);
 
+    // On mobile, trigger about section counters immediately since scroll-jacking is disabled
+    if (window.innerWidth <= 900) {
+      setTimeout(() => animateCounters(), 500);
+      setupMobileLayout();
+    }
+
     // Mark hero as animated (it's visible on load)
     animatedSections.add(0);
 
@@ -1006,6 +1016,50 @@ Keep ALL responses extremely short, concise, and direct (maximum 2-3 sentences o
       isDragging = false;
       wrapper.classList.remove('is-dragging');
     });
+  }
+
+  // ---------------------------------------------------------------
+  // Mobile Layout Adjustments
+  // ---------------------------------------------------------------
+  function setupMobileLayout() {
+    const bentoGlass = document.querySelector('.bento-card--glass');
+    const bentoSolid = document.querySelector('.bento-card--solid');
+    if (!bentoGlass || !bentoSolid) return;
+
+    // Move Education cards to the Technical Proficiency card
+    const eduMiniCards = bentoSolid.querySelectorAll('.edu-mini-card');
+    if (eduMiniCards.length > 0) {
+      const eduWrapper = document.createElement('div');
+      eduWrapper.style.marginTop = '24px';
+      eduMiniCards.forEach(card => eduWrapper.appendChild(card));
+      bentoGlass.appendChild(eduWrapper);
+    }
+    
+    // Update label of first card
+    const glassLabel = bentoGlass.querySelector('.bento-card__label');
+    if (glassLabel && glassLabel.textContent.includes('Technical Proficiency')) {
+      glassLabel.textContent = 'Technical Proficiency & Education';
+    }
+    
+    // Remove Projects popup as requested
+    const projPopup = document.getElementById('experience2Popup');
+    if (projPopup) projPopup.remove();
+
+    // Now bentoSolid is Experience only
+    const solidLabel = bentoSolid.querySelector('.bento-card__label');
+    if (solidLabel) {
+      solidLabel.textContent = 'Experience';
+    }
+    
+    // Clean up Experience popup styling
+    const expPopup = document.getElementById('experiencePopup');
+    if (expPopup) {
+      expPopup.style.marginTop = '0';
+      expPopup.style.paddingTop = '10px';
+      expPopup.style.borderTop = 'none';
+      const title = expPopup.querySelector('.experience-popup__title');
+      if (title) title.style.display = 'none'; 
+    }
   }
 
   // ---------------------------------------------------------------
