@@ -542,16 +542,15 @@
   }
 
   // ---------------------------------------------------------------
-  // Name Scatter Effect
+  // Name "i" Effect
   // ---------------------------------------------------------------
-  function initScatterEffect() {
+  function initNameEffect() {
     const nameEl = document.querySelector('.profile__name');
     if (!nameEl) return;
     
     const text = nameEl.textContent.trim();
     nameEl.innerHTML = '';
     
-    // Split by words first to prevent letters wrapping in the middle of a word
     const words = text.split(' ');
     
     words.forEach((word, wordIndex) => {
@@ -559,15 +558,11 @@
       wordSpan.style.display = 'inline-block';
       wordSpan.style.whiteSpace = 'nowrap';
       
-      // Wrap each character in the word
       word.split('').forEach(char => {
         const charSpan = document.createElement('span');
-        charSpan.className = 'scatter-char';
         charSpan.style.display = 'inline-block';
-        charSpan.style.transition = 'transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
         
         if (char === 'i') {
-          // Special "i" with jiggling dot
           charSpan.classList.add('jiggle-i');
           charSpan.innerHTML = '<span class="i-dot"></span><span class="i-body">ı</span>';
         } else {
@@ -579,70 +574,12 @@
       
       nameEl.appendChild(wordSpan);
       
-      // Add a regular space after each word (except the last)
       if (wordIndex < words.length - 1) {
         nameEl.appendChild(document.createTextNode(' '));
       }
     });
-
-    let lastX = 0;
-    let lastY = 0;
-    let lastTime = Date.now();
-    
-    nameEl.addEventListener('mousemove', (e) => {
-      const now = Date.now();
-      const dt = Math.max(now - lastTime, 1);
-      const dx = e.clientX - lastX;
-      const dy = e.clientY - lastY;
-      
-      const speed = Math.sqrt(dx * dx + dy * dy) / dt; // pixels per ms
-      
-      const chars = nameEl.querySelectorAll('.scatter-char');
-      const mouseX = e.clientX;
-      const mouseY = e.clientY;
-      
-      chars.forEach(char => {
-        const rect = char.getBoundingClientRect();
-        const charX = rect.left + rect.width / 2;
-        const charY = rect.top + rect.height / 2;
-        
-        const distX = charX - mouseX;
-        const distY = charY - mouseY;
-        const dist = Math.sqrt(distX * distX + distY * distY) || 1;
-        
-        // Scatter threshold (proximity and speed)
-        if (dist < 150 && speed > 0.1) {
-          // Push away from cursor, scaled by speed
-          const force = (150 - dist) * Math.min(speed, 3) * 0.8;
-          const pushX = (distX / dist) * force;
-          const pushY = (distY / dist) * force;
-          const rotate = (Math.random() - 0.5) * force * 2;
-          
-          char.style.transform = `translate(${pushX}px, ${pushY}px) rotate(${rotate}deg)`;
-          char.style.transition = 'transform 0.1s ease-out';
-          
-          // Reset spring
-          clearTimeout(char.scatterTimeout);
-          char.scatterTimeout = setTimeout(() => {
-            char.style.transform = 'translate(0, 0) rotate(0deg)';
-            char.style.transition = 'transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
-          }, 150);
-        }
-      });
-      
-      lastX = e.clientX;
-      lastY = e.clientY;
-      lastTime = now;
-    });
-
-    nameEl.addEventListener('mouseleave', () => {
-      const chars = nameEl.querySelectorAll('.scatter-char');
-      chars.forEach(char => {
-        char.style.transform = 'translate(0, 0) rotate(0deg)';
-        char.style.transition = 'transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)';
-      });
-    });
   }
+
 
   // ---------------------------------------------------------------
   // Chatbot Logic
@@ -938,7 +875,7 @@ Keep ALL responses extremely short, concise, and direct (maximum 2-3 sentences o
     initNavDots();
     initCTAButtons();
     initContactForm();
-    initScatterEffect();
+    initNameEffect();
     prepareAboutText();
     initChatbot();
     initSkillMarquee();
